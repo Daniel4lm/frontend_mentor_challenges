@@ -1,3 +1,292 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    font-size: 62.5%;
+  }
+
+  body {
+    font-size: 1.6rem;
+    transition: background 0.25s ease-in-out;
+    /* Font smoothing -> It only works on Mac OS X/macOS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .nav-link {
+    @apply text-1.1 rounded-xl py-4 px-4 tracking-wide transition-colors duration-200 ease-in-out hover:bg-[#ececec] hover:text-gray-800;
+  }
+}
+
+/* Header */
+
+#header {
+  /*position: fixed;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  @apply z-[1000] flex w-full items-center justify-evenly bg-white py-4 px-8 transition-all duration-200 ease-in-out;
+  box-shadow: 0 5px 15px -10px #000000;
+}
+
+.on-top {
+  /* add some stuff here on the top */
+}
+
+.scroll-up {
+  transform: translate3d(0, 0, 0);
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-down {
+  transform: translate3d(0, -100%, 0);
+  box-shadow: none;
+}
+
+/* Application logo */
+
+.app-logo {
+  @apply rounded-[0.4rem] border border-[#222222] bg-[#222222] py-2 px-4;
+}
+
+.logo-text {
+  @apply text-[1.2em] font-medium capitalize;
+}
+
+/* Navigation bar */
+
+.nav-links {
+  @apply flex;
+}
+
+.nav-link > a {
+  @apply py-[10px] px-[8px] text-[#585858] decoration-0;
+  /*border-bottom: 2px solid transparent;*/
+}
+
+.nav-link.link-active {
+  @apply bg-[#ececec];
+}
+
+.nav-link > a.link-active {
+  @apply text-inherit decoration-0;
+  /*border-bottom: 2px solid rgb(32, 139, 182);*/
+}
+
+.nav-link:hover {
+  @apply cursor-pointer bg-[#ececec] transition-colors duration-200 ease-in-out;
+}
+
+/* Hamburger */
+.hamburger {
+  position: relative;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  width: 2.2em;
+  height: 2.2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.hamburger:focus {
+  outline: none;
+}
+
+.hamburger:hover .hamb-line {
+  opacity: 0.75;
+}
+
+.hamb-line {
+  width: 100%;
+  height: 2px;
+  transform-origin: 1px;
+  background: rgb(55, 58, 71) none repeat scroll 0% 0%;
+  transition: all 0.3s linear;
+}
+
+.hamburger.toggle .hamb-line:first-child {
+  transform: translateX(10%) rotate(45deg);
+}
+
+.hamburger.toggle .hamb-line:nth-child(2) {
+  opacity: 0;
+  width: 0;
+}
+
+.hamburger.toggle .hamb-line:nth-child(3) {
+  transform: translateX(10%) rotate(-45deg);
+}
+
+/* Side-bar */
+
+.side-bar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+}
+
+.side-bar-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.4s, visibility 0.4s;
+}
+
+.sidebar-menu-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  transition: left 0.4s, visibility 0.4s;
+}
+
+.sidebar-content {
+  position: relative;
+  display: block;
+}
+
+/*
+.sidebar-menu-container::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(255, 176, 47);
+    animation: sidebar 1.8s forwards ease-in-out;
+}
+*/
+
+.hide-element {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.hide-element.close {
+  animation: sidebar-animation 0.8s forwards ease-in-out;
+}
+
+@keyframes sidebar-animation {
+  0% {
+    background-color: rgb(255, 176, 47);
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 0;
+    left: 100%;
+    opacity: 0;
+  }
+}
+
+.side-bar-overlay-collapsed {
+  background: transparent !important;
+}
+
+.side-bar-collapsed {
+  visibility: collapse !important;
+}
+
+.side-nav-bar-close {
+  display: inline-block;
+  font-size: 2em;
+  margin: 10px 0px 24px;
+  cursor: pointer;
+}
+
+.sidebar-link {
+  position: relative;
+  font-size: 1.2em;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-link > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0px;
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0)
+    linear-gradient(
+      to right,
+      rgba(103, 35, 130, 0.16),
+      rgba(103, 35, 130, 0.16),
+      transparent
+    )
+    repeat scroll 0% 0%;
+}
+
+/* Main section */
+
+.section-shadow {
+  box-shadow: 0 0.125rem 0.25rem 0 rgba(0, 0, 0, 0.275);
+}
+
+.challenge-item {
+  @apply m-[5px] flex items-center justify-between gap-[15px] rounded-md px-[5px] py-[6px] text-[0.95em] sm:m-[10px] sm:px-[10px] sm:text-[1.1em];
+  line-height: 24px;
+}
+
+.challenge-item:hover {
+  @apply cursor-pointer transition-colors duration-200 ease-in-out;
+  background: linear-gradient(to right, #e5e5e5, #ddd);
+  cursor: pointer;
+}
+
+.challenge-item:active,
+.challenge-item:focus {
+  color: white;
+  background: linear-gradient(to left, #4535aa, #ed639e);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.25);
+}
+
+@media only screen and (max-width: 768px) {
+  #header {
+    justify-content: space-between;
+  }
+
+  .nav-bar {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+    cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .hamburger {
+    display: none;
+  }
+}
