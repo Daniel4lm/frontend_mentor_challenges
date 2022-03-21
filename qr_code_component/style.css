@@ -468,12 +468,55 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-backdrop-sepia:  ;
 }
 
+.qr-card {
+  display: flex;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.2rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  padding: 1rem;
+  box-shadow: 0 6px 18px 0 #b4c7df;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.bottom-8 {
+  bottom: 2rem;
+}
+
 .m-0 {
   margin: 0px;
 }
 
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-1 {
+  margin-top: 0.25rem;
+}
+
+.mb-3 {
+  margin-bottom: 0.75rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }
 
 .flex {
@@ -488,25 +531,77 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
+.w-\[280px\] {
+  width: 280px;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
 .flex-col {
   flex-direction: column;
 }
 
-.place-content-center {
-  place-content: center;
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.bg-preview-bg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 226 240 / var(--tw-bg-opacity));
+}
+
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
 }
 
 .text-center {
   text-align: center;
 }
 
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
+.font-outfit {
+  font-family: Outfit, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.text-\[22px\] {
+  font-size: 22px;
+}
+
+.text-card-desc {
+  font-size: 15px;
 }
 
 .font-bold {
   font-weight: 700;
+}
+
+.text-title-text {
+  --tw-text-opacity: 1;
+  color: rgb(31 50 81 / var(--tw-text-opacity));
+}
+
+.text-desc-text {
+  --tw-text-opacity: 1;
+  color: rgb(123 135 157 / var(--tw-text-opacity));
 }
 
 .text-optimum-blue {
@@ -514,7 +609,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(0 158 252 / var(--tw-text-opacity));
 }
 
+.opacity-0 {
+  opacity: 0;
+}
+
 .hover\:text-optimum-darkblue:hover {
   --tw-text-opacity: 1;
   color: rgb(3 137 225 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .tablet\:opacity-100 {
+    opacity: 1;
+  }
 }
