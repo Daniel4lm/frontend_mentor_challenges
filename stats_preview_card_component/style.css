@@ -473,16 +473,17 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: normal;
 }
 
-.absolute {
-  position: absolute;
-}
-
 .relative {
   position: relative;
 }
 
 .m-0 {
   margin: 0px;
+}
+
+.my-4 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .mt-4 {
@@ -513,16 +514,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   display: none;
 }
 
-.h-\[100vh\] {
-  height: 100vh;
-}
-
 .h-full {
   height: 100%;
 }
 
 .max-h-full {
   max-height: 100%;
+}
+
+.min-h-\[100vh\] {
+  min-height: 100vh;
 }
 
 .w-full {
@@ -575,10 +576,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-hidden {
   overflow: hidden;
-}
-
-.overflow-scroll {
-  overflow: scroll;
 }
 
 .rounded-lg {
@@ -689,10 +686,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   opacity: 0.75;
 }
 
-.opacity-0 {
-  opacity: 0;
-}
-
 .mix-blend-multiply {
   mix-blend-mode: multiply;
 }
@@ -708,6 +701,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     line-height: normal;
   }
 
+  .mobile\:mt-8 {
+    margin-top: 2rem;
+  }
+
   .mobile\:justify-start {
     justify-content: flex-start;
   }
@@ -715,13 +712,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   .mobile\:gap-16 {
     gap: 4rem;
   }
+
+  .mobile\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 }
 
 @media (min-width: 768px) {
-  .tablet\:bottom-8 {
-    bottom: 2rem;
-  }
-
   .tablet\:mt-8 {
     margin-top: 2rem;
   }
@@ -752,10 +750,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .tablet\:text-left {
     text-align: left;
-  }
-
-  .tablet\:opacity-100 {
-    opacity: 1;
   }
 }
 

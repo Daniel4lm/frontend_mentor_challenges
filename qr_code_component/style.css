@@ -470,9 +470,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .qr-card {
   display: flex;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 85%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -480,23 +478,31 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   padding: 1rem;
-  box-shadow: 0 6px 18px 0 #b4c7df;
 }
 
-.absolute {
-  position: absolute;
+@media (min-width: 376px) {
+  .qr-card {
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+  }
+}
+
+.qr-card {
+  box-shadow: 0 6px 18px 0 #b4c7df;
 }
 
 .relative {
   position: relative;
 }
 
-.bottom-8 {
-  bottom: 2rem;
-}
-
 .m-0 {
   margin: 0px;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .mt-4 {
@@ -529,14 +535,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-full {
   width: 100%;
-}
-
-.w-\[280px\] {
-  width: 280px;
-}
-
-.w-64 {
-  width: 16rem;
 }
 
 .flex-col {
@@ -590,6 +588,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 15px;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -609,17 +612,22 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(0 158 252 / var(--tw-text-opacity));
 }
 
-.opacity-0 {
-  opacity: 0;
-}
-
 .hover\:text-optimum-darkblue:hover {
   --tw-text-opacity: 1;
   color: rgb(3 137 225 / var(--tw-text-opacity));
 }
 
-@media (min-width: 768px) {
-  .tablet\:opacity-100 {
-    opacity: 1;
+@media (min-width: 376px) {
+  .mobile\:w-\[280px\] {
+    width: 280px;
+  }
+
+  .mobile\:w-64 {
+    width: 16rem;
+  }
+
+  .mobile\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }
