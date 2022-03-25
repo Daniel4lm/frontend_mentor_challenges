@@ -481,18 +481,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   box-shadow: 0px 1rem 2rem -0.4rem hsl(224deg 23% 55% / 55%);
 }
 
-.absolute {
-  position: absolute;
-}
-
-.bottom-4 {
-  bottom: 1rem;
-}
-
-.right-4 {
-  right: 1rem;
-}
-
 .m-0 {
   margin: 0px;
 }
@@ -518,16 +506,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0px;
 }
 
+.mt-8 {
+  margin-top: 2rem;
+}
+
 .flex {
   display: flex;
 }
 
-.h-\[100vh\] {
-  height: 100vh;
-}
-
 .h-full {
   height: 100%;
+}
+
+.min-h-\[100vh\] {
+  min-height: 100vh;
 }
 
 .w-full {
@@ -542,6 +534,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+}
+
+.max-w-\[28rem\] {
+  max-width: 28rem;
 }
 
 .cursor-pointer {
@@ -656,6 +652,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 12px;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .font-extrabold {
   font-weight: 800;
 }
@@ -702,10 +703,6 @@ Ensure the default browser behavior of the `hidden` attribute.
           text-decoration-line: underline;
 }
 
-.opacity-0 {
-  opacity: 0;
-}
-
 .hover\:bg-hover:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(118 108 241 / var(--tw-bg-opacity));
@@ -738,11 +735,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     background-size: 100%;
   }
 
-  .mobile\:my-2 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-
   .mobile\:mt-1 {
     margin-top: 0.25rem;
   }
@@ -759,20 +751,8 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-bottom: 0px;
   }
 
-  .mobile\:w-\[90\%\] {
-    width: 90%;
-  }
-
-  .mobile\:max-w-md {
-    max-width: 28rem;
-  }
-
   .mobile\:p-8 {
     padding: 2rem;
-  }
-
-  .mobile\:p-6 {
-    padding: 1.5rem;
   }
 
   .mobile\:text-\[28px\] {
@@ -795,7 +775,16 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (min-width: 768px) {
-  .tablet\:opacity-100 {
-    opacity: 1;
+  .tablet\:my-2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .tablet\:w-\[90\%\] {
+    width: 90%;
+  }
+
+  .tablet\:p-6 {
+    padding: 1.5rem;
   }
 }

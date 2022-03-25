@@ -620,10 +620,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   bottom: 0px;
 }
 
-.bottom-4 {
-  bottom: 1rem;
-}
-
 .z-\[100\] {
   z-index: 100;
 }
@@ -644,6 +640,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .mt-4 {
@@ -690,6 +691,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .h-\[55\%\] {
   height: 55%;
+}
+
+.min-h-\[100vh\] {
+  min-height: 100vh;
 }
 
 .w-full {
@@ -744,10 +749,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .justify-between {
   justify-content: space-between;
-}
-
-.gap-\[8\%\] {
-  gap: 8%;
 }
 
 .gap-1 {
@@ -1125,10 +1126,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     right: -12%;
   }
 
-  .tablet\:h-\[100vh\] {
-    height: 100vh;
-  }
-
   .tablet\:h-\[90\%\] {
     height: 90%;
   }
@@ -1145,6 +1142,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     flex-direction: row;
   }
 
+  .tablet\:gap-\[8\%\] {
+    gap: 8%;
+  }
+
   .tablet\:pt-0 {
     padding-top: 0px;
   }
@@ -1155,9 +1156,5 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .tablet\:text-\[2\.5rem\] {
     font-size: 2.5rem;
-  }
-
-  .tablet\:opacity-100 {
-    opacity: 1;
   }
 }
