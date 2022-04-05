@@ -28,6 +28,12 @@
     />
     <link rel="manifest" href="site.webmanifest" />
 
+    <!-- Alpine.js CDN -->
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
     <!-- Google fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lexend+Deca&family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@200;300;400;500&family=Raleway:wght@400;600&family=Roboto:wght@300;400;500&family=Rubik:wght@300;400;500;600;700;800&display=swap"
@@ -42,10 +48,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body class="font-poppins m-0">
+  <body class="font-poppins m-0 pt-16" x-data="{...sidebar()}">
     <div class="flex min-h-[100vh] w-full flex-col bg-[#f3f3f3]">
       <!-- Header section -->
-      <header id="header">
+      <header
+        class="header"
+        x-data="scrollData()"
+        x-on:scroll.window="onScrollState"
+        x-bind:class="scrollClass"
+      >
         <a
           href="#"
           class="flex items-center transition-colors duration-300 ease-in-out"
@@ -59,23 +70,45 @@
         <!-- Navigation bar -->
         <nav id="nav-bar" class="nav-bar">
           <ul id="nav-links" class="flex gap-2">
-            <li class="nav-link link-active">
-              <a class="link-active" href="#projects">Projects</a>
+            <li class="nav-link">
+              <a class="flex items-center p-0" href="#projects">Projects</a>
             </li>
             <li class="nav-link">
               <a
+                class="flex items-center p-0"
                 href="https://github.com/Daniel4lm/frontend_mentor_challenges"
                 target="_blank"
                 >Source code</a
               >
             </li>
-            <li class="nav-link">
-              <a href="https://github.com/Daniel4lm/" target="_blank">GitHub</a>
+            <li class="nav-link link-active">
+              <a
+                class="flex items-center p-0"
+                href="https://github.com/Daniel4lm/"
+                target="_blank"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  class="mr-3 transform text-sky-600 text-opacity-50"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.463 2 11.97c0 4.404 2.865 8.14 6.839 9.458.5.092.682-.216.682-.48 0-.236-.008-.864-.013-1.695-2.782.602-3.369-1.337-3.369-1.337-.454-1.151-1.11-1.458-1.11-1.458-.908-.618.069-.606.069-.606 1.003.07 1.531 1.027 1.531 1.027.892 1.524 2.341 1.084 2.91.828.092-.643.35-1.083.636-1.332-2.22-.251-4.555-1.107-4.555-4.927 0-1.088.39-1.979 1.029-2.675-.103-.252-.446-1.266.098-2.638 0 0 .84-.268 2.75 1.022A9.606 9.606 0 0112 6.82c.85.004 1.705.114 2.504.336 1.909-1.29 2.747-1.022 2.747-1.022.546 1.372.202 2.386.1 2.638.64.696 1.028 1.587 1.028 2.675 0 3.83-2.339 4.673-4.566 4.92.359.307.678.915.678 1.846 0 1.332-.012 2.407-.012 2.734 0 .267.18.577.688.48C19.137 20.107 22 16.373 22 11.969 22 6.463 17.522 2 12 2z"
+                  ></path>
+                </svg>
+                <span>GitHub</span>
+              </a>
             </li>
           </ul>
         </nav>
 
-        <button class="hamburger">
+        <button
+          :class="sidebarOpen ? 'hamburger toggle' : 'hamburger'"
+          x-on:click="toggleSideBar"
+        >
           <div class="hamb-line"></div>
           <div class="hamb-line"></div>
           <div class="hamb-line"></div>
@@ -83,97 +116,157 @@
       </header>
 
       <!-- Side bar -->
-      <div class="side-bar hidden">
-        <div class="side-bar-overlay"></div>
+      <div :class="sidebarOpen ? 'side-bar' : 'side-bar side-bar-collapsed'">
+        <div
+          :class="sidebarOpen ? 'side-bar-overlay' : 'side-bar-overlay side-bar-overlay-collapsed'"
+          x-on:click="setToggle(false)"
+        ></div>
 
-        <div class="sidebar-menu-container">
-          <div class="hide-element"></div>
+        <div
+          class="sidebar-menu-container"
+          :style="{
+          width: window.innerWidth < 375 ? window.innerWidth / 2 + 'px' : window.innerWidth / 3 + 'px', 
+          [sideBarSide.left]: (sidebarOpen ? 0 : (window.innerWidth / 3 * -1)) + 'px'
+        }"
+        >
+          <div
+            :class="sidebarOpen ? 'hide-element close' : 'hide-element'"
+          ></div>
 
           <!-- close button -->
           <div>
-            <span class="material-icons side-nav-bar-close">clear</span>
+            <span
+              class="material-icons side-nav-bar-close"
+              x-on:click="setToggle(false)"
+              >clear</span
+            >
           </div>
           <ul class="sidebar-links">
-            <li class="sidebar-link"><a href="#">Projects</a></li>
-            <li class="sidebar-link"><a href="#">GitHub</a></li>
-            <li class="sidebar-link"><a href="#">Contact</a></li>
+            <template x-for="item in navLinks">
+              <li class="sidebar-link">
+                <a :href="item.link" x-text="item.title"></a>
+              </li>
+            </template>
           </ul>
         </div>
       </div>
       <!-- main page section -->
-      <main class="flex w-full flex-[2] flex-col justify-center p-4">
+      <main
+        x-data="projects()"
+        class="flex w-full flex-[2] flex-col justify-center p-4"
+      >
         <section
           id="projects"
-          class="section-shadow m-auto my-10 w-[90%] rounded-xl bg-white p-8 sm:w-max"
+          class="section-shadow m-auto my-10 w-[95%] rounded-xl bg-white p-8 sm:w-max"
         >
-          <div class="flex items-center gap-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              fill="currentColor"
-              class="bi bi-ui-checks-grid text-danger"
-              viewBox="0 0 18 18"
+          <div
+            class="mobile:mb-0 mb-4 flex flex-wrap items-center gap-4 md:flex-nowrap"
+          >
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-ui-checks-grid text-danger"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z"
+                ></path>
+              </svg>
+              <p class="my-4 text-[1.3em] text-slate-800">
+                Frontend challenges:
+              </p>
+            </div>
+            <div
+              class="mobile:w-max mobile:justify-start flex w-full items-center justify-center gap-4"
             >
-              <path
-                d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z"
-              ></path>
-            </svg>
-            <p class="my-4 text-[1.3em] text-slate-800">Challenges list:</p>
+              <span
+                class="rounded-full bg-sky-100 py-2 px-3 text-xl font-medium text-sky-500"
+                >tailwind-css</span
+              >
+            </div>
           </div>
           <hr />
+
           <ul class="p-0 sm:p-4">
-            <li class="challenge-item border-b border-slate-200">
-              <span class="p-2">QR Code component</span>
-              <a
-                class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
-                target="_blank"
-                href="https://daniel4lm.github.io/frontend_mentor_challenges/qr_code_component"
-                >Source code</a
+            <template
+              x-for="project in filterProjectsStrict(['html', 'css', 'tailwind-css'])"
+              :key="project.id"
+            >
+              <li class="challenge-item border-b border-slate-100">
+                <a :href="project.link" class="p-2" x-text="project.title"></a>
+                <a
+                  class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
+                  target="_blank"
+                  :href="project.sourceCode"
+                >
+                  Source code
+                </a>
+              </li>
+            </template>
+          </ul>
+
+          <br />
+
+          <div
+            class="mobile:mb-0 mb-4 flex flex-wrap items-center gap-4 md:flex-nowrap"
+          >
+            <div class="flex items-center gap-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="currentColor"
+                class="bi bi-ui-checks-grid text-danger"
+                viewBox="0 0 18 18"
               >
-            </li>
-            <li class="challenge-item border-b border-slate-200">
-              <span class="p-2">Stats preview card component</span>
-              <a
-                class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
-                target="_blank"
-                href="https://daniel4lm.github.io/frontend_mentor_challenges/stats_preview_card_component"
-                >Source code</a
+                <path
+                  d="M2 10h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm9-9h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm0 9a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-3zm0-10a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2h-3zM2 9a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H2zm7 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-3a2 2 0 0 1-2-2v-3zM0 2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.354.854a.5.5 0 1 0-.708-.708L3 3.793l-.646-.647a.5.5 0 1 0-.708.708l1 1a.5.5 0 0 0 .708 0l2-2z"
+                ></path>
+              </svg>
+              <p class="my-4 text-[1.3em] text-slate-800">
+                Frontend challenges:
+              </p>
+            </div>
+            <div
+              class="mobile:w-max mobile:justify-start flex w-full items-center justify-center gap-4"
+            >
+              <span
+                class="rounded-full bg-sky-100 py-2 px-3 text-xl font-medium text-sky-500"
+                >tailwind-css</span
               >
-            </li>
-            <li class="challenge-item border-b border-slate-200">
-              <span class="p-2">Profile card component</span>
-              <a
-                class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
-                target="_blank"
-                href="https://daniel4lm.github.io/frontend_mentor_challenges/profile_card_component"
-                >Source code</a
+              <span
+                class="rounded-full bg-emerald-100 py-2 px-3 text-xl font-medium text-emerald-600"
+                >alpine.js</span
               >
-            </li>
-            <li class="challenge-item border-b border-slate-200">
-              <span class="p-2">Order summary component</span>
-              <a
-                class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
-                target="_blank"
-                href="https://daniel4lm.github.io/frontend_mentor_challenges/order_summary_component"
-                >Source code</a
-              >
-            </li>
-            <li class="challenge-item">
-              <span class="p-2">Chat app CSS illustration</span>
-              <a
-                class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
-                target="_blank"
-                href="https://daniel4lm.github.io/frontend_mentor_challenges/chat_app_css_illustration"
-                >Source code</a
-              >
-            </li>
+            </div>
+          </div>
+          <hr />
+
+          <ul class="p-0 sm:p-4">
+            <template
+              x-for="project in filterProjectsAny(['alpinejs'])"
+              :key="project.id"
+            >
+              <li class="challenge-item border-b border-slate-100">
+                <a :href="project.link" class="p-2" x-text="project.title"></a>
+                <a
+                  class="text-optimum-blue hover:text-optimum-darkblue text-right sm:text-center"
+                  target="_blank"
+                  :href="project.link"
+                >
+                  Source code
+                </a>
+              </li>
+            </template>
           </ul>
         </section>
       </main>
 
       <footer
-        class="flex w-full flex-1 flex-col items-center justify-center bg-slate-500 py-10 text-center text-slate-50 sm:flex-row"
+        class="flex w-full flex-1 flex-col items-center justify-center bg-slate-500 py-14 text-center text-slate-50 sm:flex-row"
       >
         <div class="mx-10 flex flex-col place-content-center text-center">
           <div class="text-[1.2em] font-bold">
@@ -245,5 +338,176 @@
         </div>
       </footer>
     </div>
+
+    <script>
+      document.addEventListener('alpine:init', function () {
+        Alpine.data('sidebar', function () {
+          return {
+            sidebarOpen: false,
+            toggleSideBar() {
+              this.sidebarOpen = !this.sidebarOpen
+            },
+            setToggle(newStatus) {
+              this.sidebarOpen = newStatus
+            },
+            sideBarSide: {
+              left: 'left',
+              right: 'right',
+            },
+            navLinks: [
+              {
+                id: 1,
+                title: 'home',
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/',
+              },
+              {
+                id: 2,
+                title: 'projects',
+                link: '#projects',
+              },
+              {
+                id: 3,
+                title: 'source code',
+                link: 'https://github.com/Daniel4lm/frontend_mentor_challenges',
+              },
+              {
+                id: 4,
+                title: 'github',
+                link: 'https://github.com/Daniel4lm/',
+              },
+            ],
+          }
+        })
+
+        Alpine.data('scrollData', function () {
+          return {
+            lastScrollY: window.pageYOffset || 0,
+            scrollClass: '',
+            init() {
+              this.lastScrollY = parseInt(
+                localStorage.getItem('last-scroll') || '0'
+              )
+            },
+            onScrollState() {
+              const currentScroll = window.pageYOffset
+
+              if (currentScroll <= 0) {
+                this.scrollClass = 'on-top'
+              } else if (
+                currentScroll > 50 &&
+                currentScroll > this.lastScrollY
+              ) {
+                this.scrollClass = 'scroll-down'
+              } else {
+                this.scrollClass = 'scroll-up'
+              }
+              localStorage.setItem('last-scroll', currentScroll.toString())
+              this.lastScrollY = currentScroll
+            },
+          }
+        })
+
+        Alpine.data('projects', function () {
+          return {
+            projects: [
+              {
+                id: 1,
+                title: 'QR Code component',
+                tags: ['html', 'css', 'tailwind-css'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/qr_code_component',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/qr_code_component/challenges/qr_code_component',
+              },
+              {
+                id: 2,
+                title: 'Stats preview card component',
+                tags: ['html', 'css', 'tailwind-css'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/stats_preview_card_component',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/stats_preview_card_component/challenges/stats_preview_card_component',
+              },
+              {
+                id: 3,
+                title: 'Profile card component',
+                tags: ['html', 'css', 'tailwind-css'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/profile_card_component',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/profile_card_component/challenges/profile_card_component',
+              },
+              {
+                id: 4,
+                title: 'Order summary component',
+                tags: ['html', 'css', 'tailwind-css'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/order_summary_component',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/order_summary_component/challenges/order_summary_component',
+              },
+              {
+                id: 5,
+                title: 'Chat app CSS illustration',
+                tags: ['html', 'css', 'tailwind-css'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/chat_app_css_illustration',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/chat_app_css_illustration/challenges/chat_app_css_illustration',
+              },
+              {
+                id: 6,
+                title: 'FAQ accordion card',
+                tags: ['html', 'css', 'tailwind-css', 'alpinejs'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/faq_accordion_card',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/faq_accordion_card/challenges/faq_accordion_card',
+              },
+              {
+                id: 7,
+                title: 'Blogr landing page',
+                tags: ['html', 'css', 'tailwind-css', 'alpinejs'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/blogr_landing_page',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/blogr_landing_page/challenges/blogr_landing_page',
+              },
+              {
+                id: 8,
+                title: 'Interactive pricing component',
+                tags: ['html', 'css', 'tailwind-css', 'alpinejs'],
+                link: 'https://daniel4lm.github.io/frontend_mentor_challenges/interactive_pricing_component',
+                sourceCode:
+                  'https://github.com/Daniel4lm/frontend_mentor_challenges/tree/interactive_pricing_component/challenges/interactive_pricing_component',
+              },
+            ],
+
+            filterProjectsStrict(categories = ['']) {
+              let outProjects = []
+              this.projects.forEach((proj) => {
+                let isEvery = proj.tags.every((tag) => {
+                  if (categories.some((cat) => cat === tag)) {
+                    return true
+                  }
+                })
+                if (isEvery) {
+                  outProjects.push(proj)
+                }
+              })
+              return outProjects
+            },
+
+            filterProjectsAny(categories = ['']) {
+              let outProjects = []
+              this.projects.forEach((proj) => {
+                let isEvery = categories.every((cat) => {
+                  if (proj.tags.some((tag) => tag === cat)) {
+                    return true
+                  }
+                })
+                if (isEvery) {
+                  outProjects.push(proj)
+                }
+              })
+              return outProjects
+            },
+          }
+        })
+      })
+    </script>
   </body>
 </html>

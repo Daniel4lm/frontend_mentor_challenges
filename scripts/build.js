@@ -26,7 +26,7 @@ const commands = []
   .concat(foreachChallenge('mkdir -p public/DIRECTORY'))
   .concat(
     foreachChallenge(
-      'npx cpx-fixed "challenges/DIRECTORY/**/*.{html,ico,jpg,png,svg,webmanifest}" public/DIRECTORY/' +
+      'npx cpx-fixed "challenges/DIRECTORY/**/*.{html,ico,jpg,png,svg,webmanifest,js}" public/DIRECTORY/' +
         (watch ? ' --watch' : '')
     )
   )

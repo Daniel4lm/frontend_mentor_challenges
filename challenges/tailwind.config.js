@@ -29,6 +29,14 @@ module.exports = {
         128: '32rem',
         136: '34rem',
       },
+      screens: {
+        mobile: '375px',
+        // => @media (min-width: 375px) { ... }
+        tablet: '768px',
+        // => @media (min-width: 768px) { ... }
+        desktop: '1440px',
+        // => @media (min-width: 1440px) { ... }
+      },
     },
   },
   plugins: [],
